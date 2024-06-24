@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -22,4 +24,16 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	databases, err := client.ListDatabaseNames(ctx, bson.D{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(databases)
+
+	godb := client.Database("godb")
+	daysCollection := godb.Collection("days")
+
+	count, err := daysCollection.CountDocuments(ctx, bson.D{})
+	fmt.Printf("handling days collection with %d days\n", count)
 }
