@@ -18,20 +18,17 @@ func main() {
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 	defer client.Disconnect(ctx)
 
 	err = client.Ping(ctx, readpref.Primary())
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 
 	databases, err := client.ListDatabaseNames(ctx, bson.D{})
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 	fmt.Println(databases)
 
@@ -54,7 +51,6 @@ func main() {
 	insertResult, err := daysCollection.InsertOne(ctx, newDay)
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 	fmt.Printf("inserted a new day with id %d\n", insertResult.InsertedID)
 
@@ -65,12 +61,10 @@ func main() {
 	hex, err := primitive.ObjectIDFromHex("6679356f8600d9946e82dd11")
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 	err = daysCollection.FindOne(ctx, bson.M{"_id": hex}).Decode(&day)
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
 
 	fmt.Printf("found day with %d tasks\n", len(day.Tasks))
