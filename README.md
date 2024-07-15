@@ -19,7 +19,7 @@ https://gorm.io/docs/
 $ docker run -it --name mongo -p 27017:27017 -d mongo
 ```
 
-### Postgres
+### PostgreSQL
 
 ```shell
 $ docker run -it --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=password -d postgres
